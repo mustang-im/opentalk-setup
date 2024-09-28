@@ -1,5 +1,19 @@
 ---
 services:
+  www:
+    image: caddy:latest
+    profiles: ["core", "web-frontend", "keycloak", "controller"]
+    restart: always
+    entrypoint: []
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - $PWD/caddy/data:/data
+      - $PWD/caddy/config:/config
+      - $PWD/caddy/caddyfile:/etc/caddy/Caddyfile
+#      - $PWD/site:/srv
+
   # *** Web-Frontend
   web-frontend:
     image: ${OT_FRONTEND_IMAGE_SRC:-registry.opencode.de/opentalk/web-frontend}:${OT_FRONTEND_IMAGE_TAG:-v1.20.0}

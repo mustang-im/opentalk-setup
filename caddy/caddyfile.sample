@@ -1,0 +1,19 @@
+conference.example.com {
+  reverse_proxy http://web-frontend:80
+}
+
+accounts.example.com {
+  reverse_proxy http://keycloak:8080
+}
+
+controller.example.com {
+  reverse_proxy http://controller:11311
+}
+
+whiteboard.example.com {
+  reverse_proxy http://spacedeck:9666
+}
+
+pad.example.com {
+  reverse_proxy http://etherpad:9001
+}

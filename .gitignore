@@ -4,5 +4,5 @@ data/kc_data/h2/
 data/kc_data/tmp/
 data/pg_data/
 data/minio/
-config/
-
+config
+caddy/
