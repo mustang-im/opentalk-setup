@@ -9,7 +9,7 @@ services:
       - ${OT_FRONTEND_EXP_PORT:-8080}:80
     environment:
       CONTROLLER_HOST: ${CONTROLLER_DOMAIN:-controller.${OT_DOMAIN}}
-      BASE_URL: https://${OT_DOMAIN}
+      BASE_URL: https://${FRONTEND_HOST}
       OIDC_ISSUER: https://${KC_HOSTNAME:-accounts.${OT_DOMAIN}}/auth/realms/${KC_REALM_ID:-opentalk}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-OtFrontend}
       NDT_SERVER: ${NDT_SERVER:-ndt.example.com}
@@ -44,7 +44,7 @@ services:
       OPENTALK_CTRL_DATABASE__URL: "postgres://${POSTGRES_USER:-ot}:${POSTGRES_PASSWORD}@${POSTGRES_HOST:-postgres}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-opentalk}"
       OPENTALK_CTRL_DATABASE__MAX_CONNECTIONS: "${POSTGRES_MAX__CONNECTIONS:-100}"
       OPENTALK_CTRL_HTTP__PORT: "${OPENTALK_CTRL_HTTP__PORT:-11311}"
-      OPENTALK_CTRL_KEYCLOAK__BASE_URL: "${OPENTALK_CTRL_KEYCLOAK__BASE_URL}" 
+      OPENTALK_CTRL_KEYCLOAK__BASE_URL: "${OPENTALK_CTRL_KEYCLOAK__BASE_URL}"
       OPENTALK_CTRL_KEYCLOAK__REALM: "${OPENTALK_CTRL_KEYCLOAK__REALM:-opentalk}"
       OPENTALK_CTRL_KEYCLOAK__CLIENT_ID: "${OPENTALK_CTRL_KEYCLOAK__CLIENT_ID:-OtBackend}"
       OPENTALK_CTRL_KEYCLOAK__CLIENT_SECRET: "${OPENTALK_CTRL_KEYCLOAK__CLIENT_SECRET}"
@@ -109,7 +109,7 @@ services:
       OPENTALK_REC_AUTH__CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET_RECORDER:-}
       OPENTALK_REC_RABBITMQ__URI: "amqp://rabbit/%2F"
       OPENTALK_REC_RABBITMQ__QUEUE: "opentalk_recorder"
-      OPENTALK_REC_CONTROLLER__DOMAIN: "${CONTROLLER_DOMAIN:-controller.${OT_DOMAIN}}" 
+      OPENTALK_REC_CONTROLLER__DOMAIN: "${CONTROLLER_DOMAIN:-controller.${OT_DOMAIN}}"
     volumes:
       - ${RECORDER_CONFIG_FILE:-./config/recorder.toml}:/recorder/config.toml
 
@@ -183,7 +183,7 @@ services:
       KEYCLOAK_CLIENT_SECRET_CONTROLLER: ${KEYCLOAK_CLIENT_SECRET_CONTROLLER:-}
       KEYCLOAK_CLIENT_SECRET_OBELISK: ${KEYCLOAK_CLIENT_SECRET_OBELISK:-}
       KEYCLOAK_CLIENT_SECRET_RECORDER: ${KEYCLOAK_CLIENT_SECRET_RECORDER:-}
-      KC_DOMAIN: ${OT_DOMAIN}
+      KC_DOMAIN: "${KC_DOMAIN:-${OT_DOMAIN}}"
       KC_HOSTNAME: "${KC_HOSTNAME:-accounts.${OT_DOMAIN}}"
       KC_HTTP_RELATIVE_PATH: ${KC_HTTP_RELATIVE_PATH:-/auth}
       KC_PROXY: ${KC_PROXY:-edge}
@@ -206,7 +206,7 @@ services:
       interval: 20s
       timeout: 120s
       retries: 10
- 
+
   # *** POSTGRES ***
   postgres:
     image: postgres:${POSTGRES_IMAGE_TAG:-15-alpine}
@@ -220,7 +220,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-opentalk}
       POSTGRES_USER: ${POSTGRES_USER:-ot}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
- 
+
   # *** AUTOHEAL ***
   autoheal:
     image: willfarrell/autoheal:${AUTOHEAL_IMAGE_TAG:-latest}
@@ -246,7 +246,7 @@ services:
       interval: 10s
       timeout: 15s
       retries: 5
- 
+
   # *** Redis ***
   redis:
     image: redis:${REDIS_IMAGE_TAG:-7-alpine}
