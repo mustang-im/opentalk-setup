@@ -24,10 +24,10 @@ services:
     environment:
       CONTROLLER_HOST: ${CONTROLLER_DOMAIN:-controller.${OT_DOMAIN}}
       BASE_URL: https://${FRONTEND_HOST}
-      OIDC_ISSUER: https://${KC_HOSTNAME:-accounts.${OT_DOMAIN}}/auth/realms/${KC_REALM_ID:-opentalk}
+      OIDC_ISSUER: https://${KC_HOSTNAME:-accounts.$OT_DOMAIN}/auth/realms/${KC_REALM_ID:-opentalk}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-OtFrontend}
       NDT_SERVER: ${NDT_SERVER:-ndt.example.com}
-      CHANGE_PASSWORD_URL: https://${KC_HOSTNAME:-accounts.${OT_DOMAIN}}/auth/realms/${KC_REALM_ID:-opentalk}/account/
+      CHANGE_PASSWORD_URL: https://${KC_HOSTNAME:-accounts.$OT_DOMAIN}/auth/realms/${KC_REALM_ID:-opentalk}/account/
       ERROR_REPORT_ADDRESS: ${ERROR_REPORT_ADDRESS:-reports@example.com}
       LIBRAVATAR_DEFAULT_IMAGE: ${LIBRAVATAR_DEFAULT_IMAGE:-identicon}
       VIDEO_BACKGROUNDS: >-
@@ -118,7 +118,7 @@ services:
     network_mode: host
     environment:
       RUST_LOG: ${RUST_LOG:-info}
-      OPENTALK_REC_AUTH__ISSUER: "https://${KC_HOSTNAME:-accounts.${OT_DOMAIN}}/auth/realms/${KC_REALM_ID:-opentalk}"
+      OPENTALK_REC_AUTH__ISSUER: "https://${KC_HOSTNAME:-accounts.$OT_DOMAIN}/auth/realms/${KC_REALM_ID:-opentalk}"
       OPENTALK_REC_AUTH__CLIENT_ID: "Recorder"
       OPENTALK_REC_AUTH__CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET_RECORDER:-}
       OPENTALK_REC_RABBITMQ__URI: "amqp://rabbit/%2F"
